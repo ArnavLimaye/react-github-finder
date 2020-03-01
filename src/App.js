@@ -13,6 +13,7 @@ class App extends Component {
   state = {
     users: [],
     user: {},
+    repos: [],
     loading: false,
     alert: null
   };
@@ -55,6 +56,18 @@ class App extends Component {
     });
   };
 
+  //Get User Repos
+  getUserRepos = async userName => {
+    this.setState({ loading: true });
+    const res = await Axios.get(
+      `https://api.github.com/users/${userName}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+    );
+    this.setState({
+      repos: res.data,
+      loading: false
+    });
+  };
+
   clearUsers = () => {
     this.setState({ users: [], loading: false });
   };
@@ -66,7 +79,7 @@ class App extends Component {
   };
 
   render() {
-    const { users, user, loading } = this.state;
+    const { users, user, loading, repos } = this.state;
     return (
       <Router>
         <div className='App'>
@@ -97,7 +110,9 @@ class App extends Component {
                   <User
                     {...props} ///Ask Abhjit what this syntax does?
                     getUser={this.getUser}
+                    getUserRepos={this.getUserRepos}
                     user={user}
+                    repos={repos}
                     loading={loading}
                   ></User>
                 )}
