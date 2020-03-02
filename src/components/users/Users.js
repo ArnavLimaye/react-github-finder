@@ -1,27 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import UserItem from "./UserItem";
 import Spinner from "../layouts/Spinner";
-import PropTypes from "prop-types";
+import GithubContext from "../../context/github/githubContext";
 
-const Users = ({ users, loading }) => {
+const Users = () => {
+  const githubContext = useContext(GithubContext);
+
+  const { loading, users } = githubContext;
+
   if (loading) {
     return <Spinner></Spinner>;
   }
 
   return (
     <div style={userStyle}>
-      {users.map((
-        user //Ask Abhijit why the callback function is not gven in curly braces like we do in Node
-      ) => (
-        <UserItem key={user.id} user={user}></UserItem>
+      {users.map(user => (
+        <UserItem key={user.id} user={user}></UserItem> //Ask Abhijit why the callback function is not gven in curly braces like we do in Node
       ))}
     </div>
   );
-};
-
-Users.propTypes = {
-  users: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired
 };
 
 const userStyle = {
