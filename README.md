@@ -1,5 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+If you want to access the app's services you can visit 
+https://arnav-github-finder.herokuapp.com/
+
 ## Available Scripts
 
 In the project directory, you can run:
